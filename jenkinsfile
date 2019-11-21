@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clean') {
+            steps {
+            git credentialsId: '4e50b3a3-6fbb-4274-9368-87aba6fb7acf', url: 'https://github.com/trinadhdn/WHtask.git'
+            git credentialsId: '4e50b3a3-6fbb-4274-9368-87aba6fb7acf', url: 'https://github.com/trinadhdn/QAAuto.git'
+            bat label: 'Cleaning the Project', script: 'mvn clean '
+
+            }
+        }
+        
+         stage('Install') {
+            steps {
+            bat label: 'install the Project', script: 'mvn install '
+
+            }
+        }
+        stage('Test') {
+            steps {
+            bat label: 'Test the Project', script: 'mvn Test '
+            }
+        }
+        stage('DeployThePackage') {
+            steps {
+            bat label: 'Package the Project', script: 'mvn package '
+            }
+        }
+    }
+}
+
